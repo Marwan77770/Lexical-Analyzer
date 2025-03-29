@@ -3,7 +3,6 @@
 #include <cstdio>
 using namespace std;
 
-/* Global declarations */
 int charClass;
 char lexeme[100];
 char nextChar;
@@ -11,12 +10,10 @@ int lexLen;
 int nextToken;
 FILE *in_fp;
 
-/* Character classes */
 #define LETTER 1
 #define DIGIT 2
 #define UNKNOWN 99
 
-/* Token codes */
 #define LEFT_PAREN 00
 #define IDENT 11
 #define ADD_OP 22
@@ -26,14 +23,12 @@ FILE *in_fp;
 #define DIV_OP 55
 #define EOF_TOKEN 77
 
-/* Function declarations */
 void addChar();
 void getChar();
 void getNonBlank();
 int lex();
 int lookup(char ch);
 
-/* Main driver */
 int main() {
     if ((in_fp = fopen("front.in", "r")) == NULL)
         cout << "ERROR - cannot open front.in" << endl;
@@ -46,7 +41,6 @@ int main() {
     return 0;
 }
 
-/* lookup - a function to lookup operators and parentheses and return the token */
 int lookup(char ch) {
     switch (ch) {
         case '(':
@@ -81,7 +75,6 @@ int lookup(char ch) {
     return nextToken;
 }
 
-/* addChar - a function to add nextChar to lexeme */
 void addChar() {
     if (lexLen <= 98) {
         lexeme[lexLen++] = nextChar;
@@ -90,7 +83,6 @@ void addChar() {
         cout << "Error - lexeme is too long" << endl;
 }
 
-/* getChar - a function to get the next character of input and determine its character class */
 void getChar() {
     if ((nextChar = getc(in_fp)) != EOF) {
         if (isalpha(nextChar))
@@ -103,13 +95,11 @@ void getChar() {
         charClass = EOF_TOKEN;
 }
 
-/* getNonBlank - a function to call getChar until it returns a non-whitespace character */
 void getNonBlank() {
     while (isspace(nextChar))
         getChar();
 }
 
-/* lex - a simple lexical analyzer for arithmetic expressions */
 int lex() {
     lexLen = 0;
     getNonBlank();
